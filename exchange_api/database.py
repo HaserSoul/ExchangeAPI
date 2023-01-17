@@ -2,9 +2,6 @@ import elasticsearch.helpers
 from elasticsearch import Elasticsearch
 from elasticsearch.exceptions import RequestError
 from fastapi import HTTPException, status
-import logging
-
-logger = logging.getLogger(__name__)
 
 class ElasticConnection:
     def __init__(self, credential_url: str) -> None:
@@ -38,5 +35,4 @@ class ElasticConnection:
             raise
         
         except Exception as e:
-            logger.critical(e)
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal server error")
