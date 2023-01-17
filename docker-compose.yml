@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  exchange_api:
+    build: .
+    env_file:
+      - .env
+    networks:
+        code-network: ~
+    ports:
+      - 8000:8000
+
+  elasticsearch:
+        container_name: elastic
+        image: elasticsearch:7.17.8
+        environment:
+            - "discovery.type=single-node"
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+        networks:
+            code-network: ~
+        volumes:
+          - .:/usr/share/elasticsearch/data
+        restart: always
+
+networks:
+    code-network:
+        name: shake-task-network
